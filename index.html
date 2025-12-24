@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Timbre Automático - Gestión de Horarios</title>
+    <link rel="stylesheet" href="/styles.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <header>
+        <div class="container">
+            <div class="header-content">
+                <div class="logo">
+                    <img src="/logo_cobaemazul.png"/>
+                    <h1>Timbre Automático</h1>
+                </div>
+                <div class="user-info" id="userInfo">
+                    <!-- User info will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <section id="loginView" class="login">
+        <form id="loginForm" class="login-form">
+            <h2>Acceso al sistema</h2>
+            <div class="botones-contenedor">
+                <input type="email" class="botones" id="loginEmail" placeholder="Correo" required>
+                <input type="password" class="botones" id="loginPassword" placeholder="Contraseña" required>
+
+                <button type="submit" class="boton-entrar">
+                    Entrar
+                </button>
+            </div>
+        </form>
+    </section>
+
+    <main class="container hidden" id="mainContent">
+
+        <div class="dashboard hidden" id="dashboardContent">
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Horarios Regulares</h2>
+                    <button id="addRegularBtn" class="btn btn-primary">
+                        <i class="fas fa-plus"></i> Agregar
+                    </button>
+                </div>
+                
+                <form id="regularForm" class="hidden">
+                    <input type="hidden" id="regularId">
+                    <div class="form-group">
+                        <label class="form-label" for="diaSemana">Día de la semana</label>
+                        <select class="form-control" id="diaSemana" required>
+                            <option value="">Selecciona un día</option>
+                            <option value="1">Lunes</option>
+                            <option value="2">Martes</option>
+                            <option value="3">Miércoles</option>
+                            <option value="4">Jueves</option>
+                            <option value="5">Viernes</option>
+                            <option value="6">Sábado</option>
+                            <option value="7">Domingo</option>
+                        </select>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="horarios">Horarios (separados por comas)</label>
+                        <input type="text" class="form-control" id="horarios" placeholder="Ej: 08:00,10:30,12:00" required>
+                        <small style="color: var(--gray); font-size: 0.8rem;">Separa cada horario con una coma. Ejemplo: 08:00,10:30,12:00,14:30,16:00</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="activoRegular" checked>
+                            <label class="form-label" for="activoRegular">Activo</label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-success" id="regularSubmitBtn">Guardar</button>
+                        <button type="button" id="cancelRegularBtn" class="btn btn-outline">Cancelar</button>
+                    </div>
+                </form>
+                
+                <div class="table-container">
+                    <table id="regularTable">
+                        <thead>
+                            <tr>
+                                <th>Día</th>
+                                <th>Horarios</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="regularTableBody">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+            
+            <div class="card">
+                <div class="card-header">
+                    <h2 class="card-title">Horarios Especiales</h2>
+                    <button id="addSpecialBtn" class="btn btn-primary">
+                        <i class="fas fa-plus"></i> Agregar
+                    </button>
+                </div>
+                
+                <form id="specialForm" class="hidden">
+                    <input type="hidden" id="specialId">
+                    <div class="form-group">
+                        <label class="form-label" for="fecha">Fecha</label>
+                        <input type="date" class="form-control" id="fecha" required>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="descripcion">Descripción</label>
+                        <input type="text" class="form-control" id="descripcion" placeholder="Ej: Feriado, Exámenes, etc.">
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="form-label" for="horariosEspecial">Horarios (separados por comas)</label>
+                        <input type="text" class="form-control" id="horariosEspecial" placeholder="Ej: 09:00,11:00,14:00">
+                        <small style="color: var(--gray); font-size: 0.8rem;">Separa cada horario con una coma. Déjalo vacío si no hay horarios ese día.</small>
+                    </div>
+                    
+                    <div class="form-group">
+                        <div class="checkbox-group">
+                            <input type="checkbox" id="activoEspecial" checked>
+                            <label class="form-label" for="activoEspecial">Activo</label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <button type="submit" class="btn btn-success" id="specialSubmitBtn">Guardar</button>
+                        <button type="button" id="cancelSpecialBtn" class="btn btn-outline">Cancelar</button>
+                    </div>
+                </form>
+                
+                <div class="table-container">
+                    <table id="specialTable">
+                        <thead>
+                            <tr>
+                                <th>Fecha</th>
+                                <th>Descripción</th>
+                                <th>Horarios</th>
+                                <th>Estado</th>
+                                <th>Acciones</th>
+                            </tr>
+                        </thead>
+                        <tbody id="specialTableBody">
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <footer>
+        <div class="container">
+            <p>Sistema de Timbre Automático &copy; 2026</p>
+        </div>
+    </footer>
+
+    <div id="notification" class="notification hidden">
+        <i class="notification-icon"></i>
+        <span class="notification-message"></span>
+    </div>
+
+    <script type="module" src="/src/app.js"></script>
+</body>
